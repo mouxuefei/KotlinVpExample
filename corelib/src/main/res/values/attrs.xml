@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--状态试图的view-->
+    <declare-styleable name="MStateView">
+        <attr name="bindId" format="reference"/>
+    </declare-styleable>
+
+</resources>
