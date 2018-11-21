@@ -1,2 +1,2 @@
 # KotlinVpExample
-a kotlin MVP sample except model part
+a kotlin VP sample except model part
