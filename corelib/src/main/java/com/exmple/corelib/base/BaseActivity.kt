@@ -45,13 +45,13 @@ abstract class BaseActivity : AppCompatActivity() {
         mContext = this
         setContentView(getContentView())
         setStatusBar()
+        mProgressDialog = MLoadingView(this, R.style.dialog_transparent_style)
         if (useEventBus()) {
             register(this)
         }
         bindView()
         pushActivity(this)
         initView()
-        mProgressDialog = MLoadingView(this, R.style.dialog_transparent_style)
         onSetContentViewNext(savedInstanceState)
         initData()
     }

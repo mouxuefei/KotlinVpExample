@@ -7,7 +7,14 @@ package com.exmple.corelib.http.entity
  * @date: 05-19:24
  * @desc
 </描述当前版本功能> */
-abstract class BaseBean{
-    abstract var code: Int
-    abstract var msg: String
-}
+data class BaseBean<T> constructor(var data: T, var errorCode: Int, var errorMsg: String)
+
+data class ListBean<T>(
+val curPage: Int,
+val datas: List<T>,
+val offset: Int,
+val over: Boolean,
+val pageCount: Int,
+val size: Int,
+val total: Int
+)

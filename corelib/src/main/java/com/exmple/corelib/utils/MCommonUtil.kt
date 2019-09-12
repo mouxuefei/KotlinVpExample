@@ -19,11 +19,11 @@ fun hasSdcard(): Boolean {
  * 查看网络是否连接
  */
 fun isConnected(): Boolean {
-    val info = getActiveNetworkInfo(LibApplication.mContext)
+    val info = getActiveNetworkInfo(LibApplication.mContext) ?: return false
     return info.isConnected
 }
 
-private fun getActiveNetworkInfo(context: Context): NetworkInfo {
+private fun getActiveNetworkInfo(context: Context): NetworkInfo? {
     val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return cm.activeNetworkInfo
 }
