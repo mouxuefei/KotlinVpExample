@@ -2,7 +2,7 @@
 a kotlin VP sample except model part
 
 ## 项目介绍
-[https://blog.csdn.net/villa_mou](https://blog.csdn.net/villa_mou)
+[https://blog.csdn.net/villa_mou/article/details/81185903](https://blog.csdn.net/villa_mou/article/details/81185903)
 
 * ps:模式和我之前写的mvp基本相同,只是去除了modle部分,不过多介绍
 

@@ -125,9 +125,9 @@ dependencies {
     api rootProject.ext.dependencies["mkloader"]
     api rootProject.ext.dependencies["eventbus"]
     api rootProject.ext.dependencies["statusbarutil"]
-    api rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
-    api rootProject.ext.dependencies["PhotoView"]
-    api rootProject.ext.dependencies["SmartRefreshLayout"]
+    api rootProject.ext.dependencies["baseRecyclerViewAdapterHelper"]
+    api rootProject.ext.dependencies["photoView"]
+    api rootProject.ext.dependencies["smartRefreshLayout"]
 
 }
 kotlin{

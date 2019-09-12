@@ -52,9 +52,9 @@ ext {
             "mkloader"                             : "com.tuyenmonkey:mkloader:1.4.0",
             "eventbus"                             : "org.greenrobot:eventbus:3.0.0",
             "statusbarutil"                             : "com.jaeger.statusbarutil:library:1.4.0",
-            "BaseRecyclerViewAdapterHelper"                             : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42",
-            "PhotoView"                             : "com.github.chrisbanes:PhotoView:2.0.0",
-            "SmartRefreshLayout"                             : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12",
+            "baseRecyclerViewAdapterHelper"                             : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42",
+            "photoView"                             : "com.github.chrisbanes:PhotoView:2.0.0",
+            "smartRefreshLayout"                             : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12",
 
     ]
 
