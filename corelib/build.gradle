@@ -2,6 +2,35 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'//kotlin扩展
 apply plugin: 'kotlin-kapt'//
+apply plugin: 'maven'
+apply plugin: 'com.novoda.bintray-release'
+//bintray配置
+publish {
+    userOrg = 'mouxuefei'//bintray.com用户名
+    groupId = 'com.mou'//jcenter上的路径
+    artifactId = 'vpLib'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = 'Oh hi, this is a nice description for a project, right?'
+    website = 'https://github.com/mouxuefei/KotlinVpExample'
+    licences = ['Apache-2.0']
+}
+
+//maven配置
+def isReleaseBuild() {
+    return LIBRARY_VERSION.toUpperCase().contains("SNAPSHOT") == false
+}
+
+def getRepositoryUsername() {
+    return hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : ""
+}
+
+def getRepositoryPassword() {
+    return hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""
+}
+
+def getRepositoryUrl() {
+    return isReleaseBuild() ? RELEASE_REPOSITORY_URL : SNAPSHOT_REPOSITORY_URL
+}
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -12,8 +41,6 @@ android {
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
-        multiDexEnabled true
-        flavorDimensions "versionCode"
         ndk { //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
         }
@@ -22,6 +49,44 @@ android {
 //    androidExtensions {
 //        experimental = true
 //    }
+
+    afterEvaluate { project ->
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    pom.groupId = GROUP_ID
+                    pom.artifactId = ARTIFACTID
+                    pom.version = LIBRARY_VERSION
+                    repository(url: getRepositoryUrl()) {
+                        authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+                    }
+                }
+            }
+        }
+        task androidJavadocs(type: Javadoc) {
+            source = android.sourceSets.main.java.srcDirs
+            classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        }
+        task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+            classifier = 'javadoc'
+            from androidJavadocs.destinationDir
+        }
+        task androidSourcesJar(type: Jar) {
+            classifier = 'sources'
+            from android.sourceSets.main.java.sourceFiles
+        }
+
+        //解决 JavaDoc 中文注释生成失败的问题
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+            options.addStringOption('encoding', 'UTF-8')
+            options.addStringOption('charSet', 'UTF-8')
+        }
+        artifacts {
+            archives androidSourcesJar
+            archives androidJavadocsJar
+        }
+    }
 }
 
 dependencies {
