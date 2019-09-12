@@ -2,20 +2,21 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'//kotlin扩展
 apply plugin: 'kotlin-kapt'//
-//每个module都要添加
-kapt {
-    arguments {
-        arg("moduleName", project.getName())
-    }
-}
-android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
 
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        multiDexEnabled true
+        flavorDimensions "versionCode"
+        ndk { //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
+        }
     }
 
 //    androidExtensions {
@@ -24,40 +25,44 @@ android {
 }
 
 dependencies {
-    api "com.android.support:design:$rootProject.ext.supportVersion"
-    api "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
-    api "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintVersion"
-    //kotlin 支持库
-    api"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.20'
-    //retrofit2
-    api 'com.squareup.retrofit2:retrofit:2.4.0'
-    api 'com.squareup.retrofit2:converter-gson:2.4.0'
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    api 'com.squareup.okhttp3:logging-interceptor:3.9.0'
-    api 'io.reactivex.rxjava2:rxjava:2.1.12'
-    api 'io.reactivex.rxjava2:rxandroid:2.0.2'
-//    //glide
-    api 'com.github.bumptech.glide:glide:4.8.0'
-    //Logger
-    api 'com.orhanobut:logger:2.2.0'
+    api rootProject.ext.dependencies["kotlin"]
+    api rootProject.ext.dependencies["kotlinx-coroutines"]
+
+    api rootProject.ext.dependencies["appcompat-v7"]
+    api rootProject.ext.dependencies["design"]
+    api rootProject.ext.dependencies["constraintLayout"]
+    api rootProject.ext.dependencies["cardview-v7"]
+    api rootProject.ext.dependencies["support-v4"]
+    api rootProject.ext.dependencies["annotations"]
+    api rootProject.ext.dependencies["recyclerview-v7"]
+
+    api rootProject.ext.dependencies["retrofit"]
+    api rootProject.ext.dependencies["retrofit-converter-gson"]
+    api rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
+    api rootProject.ext.dependencies["logging-interceptor"]
+    api rootProject.ext.dependencies["okhttp3"]
+    api rootProject.ext.dependencies["gson"]
+
+
+    api rootProject.ext.dependencies["rxjava2"]
+    api rootProject.ext.dependencies["rxandroid2"]
+    api rootProject.ext.dependencies["rxbus"]
+
+
+    api rootProject.ext.dependencies["glide"]
+    api rootProject.ext.dependencies["logger"]
+
     //leakCanary
-    debugApi 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    //加载动画
-    api 'com.tuyenmonkey:mkloader:1.4.0'
-    //eventbus
-    api 'org.greenrobot:eventbus:3.0.0'
-    //状态栏
-    api 'com.jaeger.statusbarutil:library:1.4.0'
-    //BaseRecyclerViewAdapterHelper
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
-    //gson
-    api 'com.google.code.gson:gson:2.8.2'
-    //PhotoView
-    api 'com.github.chrisbanes:PhotoView:2.0.0'
-    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'
+    debugApi rootProject.ext.dependencies["leakcanary-android"]
+    releaseApi rootProject.ext.dependencies["leakcanary-android-no-op"]
+    testImplementation rootProject.ext.dependencies["leakcanary-android-no-op"]
+
+    api rootProject.ext.dependencies["mkloader"]
+    api rootProject.ext.dependencies["eventbus"]
+    api rootProject.ext.dependencies["statusbarutil"]
+    api rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
+    api rootProject.ext.dependencies["PhotoView"]
+    api rootProject.ext.dependencies["SmartRefreshLayout"]
 
 }
 kotlin{

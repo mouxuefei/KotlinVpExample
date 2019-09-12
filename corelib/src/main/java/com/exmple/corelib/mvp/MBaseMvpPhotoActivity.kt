@@ -48,7 +48,7 @@ abstract class MBaseMvpPhotoActivity<V : ITopView, P : ITopPresenter> : MBaseMvp
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//7.0
                     imageUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", fileUri)
                 }
-                MPhotoUtils.takePicture(this, imageUri, CAMERA_REQUEST_CODE)
+                MPhotoUtils.takePicture(this, imageUri!!, CAMERA_REQUEST_CODE)
             } else {
                 showToastCenter("设备没有SD卡！")
             }
@@ -78,7 +78,7 @@ abstract class MBaseMvpPhotoActivity<V : ITopView, P : ITopPresenter> : MBaseMvp
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             imageUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", fileUri)
                         }
-                        MPhotoUtils.takePicture(this, imageUri, CAMERA_REQUEST_CODE)
+                        MPhotoUtils.takePicture(this, imageUri!!, CAMERA_REQUEST_CODE)
                     } else {
                         showToastCenter("设备没有SD卡！")
                     }
@@ -117,7 +117,7 @@ abstract class MBaseMvpPhotoActivity<V : ITopView, P : ITopPresenter> : MBaseMvp
                 }
             } else if (GALLERY_REQUEST_CODE == requestCode) {
                 if (hasSdcard()) {
-                    var newUri = Uri.parse(MPhotoUtils.getPath(this, data?.data))
+                    var newUri = Uri.parse(MPhotoUtils.getPath(this, data?.data!!))
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         newUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", File(newUri.path))
                     }

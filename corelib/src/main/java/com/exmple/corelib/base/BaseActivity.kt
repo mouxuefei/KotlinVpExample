@@ -1,7 +1,6 @@
 package com.exmple.corelib.base
 
 import android.content.Context
-import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.annotation.LayoutRes
@@ -69,19 +68,19 @@ abstract class BaseActivity : AppCompatActivity() {
         StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.color_black), 0)
     }
 
-    override fun startActivity(intent: Intent) {
-        super.startActivity(intent)
-        if (hasEnterTransitionAnim()) {
-            overridePendingTransitionEnter()
-        }
-    }
-
-    override fun finish() {
-        super.finish()
-        if (hasFinishTransitionAnim()) {
-            overridePendingTransitionExit()
-        }
-    }
+//    override fun startActivity(intent: Intent) {
+//        super.startActivity(intent)
+//        if (hasEnterTransitionAnim()) {
+//            overridePendingTransitionEnter()
+//        }
+//    }
+//
+//    override fun finish() {
+//        super.finish()
+//        if (hasFinishTransitionAnim()) {
+//            overridePendingTransitionExit()
+//        }
+//    }
 
     open fun hasFinishTransitionAnim(): Boolean {
         return true
