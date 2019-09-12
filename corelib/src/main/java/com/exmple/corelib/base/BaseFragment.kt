@@ -11,7 +11,6 @@ import com.exmple.corelib.R
 import com.exmple.corelib.utils.MLoadingView
 import com.exmple.corelib.utils.register
 import com.exmple.corelib.utils.unregister
-import com.squareup.leakcanary.RefWatcher
 
 /**
  * @FileName: com.mou.demo.basekotlin.BaseFragment.java
@@ -25,7 +24,6 @@ abstract class BaseFragment : Fragment() {
     private var hasLoadData = false
     open var mContext: Context? = null
     private var mProgressDialog: MLoadingView? = null
-    private var refWatcher: RefWatcher? = null
     protected abstract fun lazyLoad()
     open val useEventBus: Boolean = false
     @LayoutRes
@@ -38,7 +36,6 @@ abstract class BaseFragment : Fragment() {
         if (useEventBus) {
             register(this)
         }
-        refWatcher = LibApplication.getRefWatcher(context)
         return rootView
     }
 
@@ -89,7 +86,6 @@ abstract class BaseFragment : Fragment() {
         if (useEventBus) {
             unregister(this)
         }
-        refWatcher?.watch(this)
     }
 }
 

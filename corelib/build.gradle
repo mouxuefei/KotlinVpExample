@@ -9,7 +9,7 @@ publish {
     userOrg = 'mouxuefei'//bintray.com用户名
     groupId = 'com.mou'//jcenter上的路径
     artifactId = 'vpLib'//项目名称
-    publishVersion = '1.0.0'//版本号
+    publishVersion = '1.1.0'//版本号
     desc = 'Oh hi, this is a nice description for a project, right?'
     website = 'https://github.com/mouxuefei/KotlinVpExample'
     licences = ['Apache-2.0']
@@ -116,11 +116,8 @@ dependencies {
 
     api rootProject.ext.dependencies["glide"]
     api rootProject.ext.dependencies["logger"]
-
-    //leakCanary
-    debugApi rootProject.ext.dependencies["leakcanary-android"]
-    releaseApi rootProject.ext.dependencies["leakcanary-android-no-op"]
-    testImplementation rootProject.ext.dependencies["leakcanary-android-no-op"]
+    //leakcanary
+//    debugApi rootProject.ext.dependencies["leakcanary-android"]
 
     api rootProject.ext.dependencies["mkloader"]
     api rootProject.ext.dependencies["eventbus"]

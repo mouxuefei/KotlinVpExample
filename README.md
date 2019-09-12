@@ -10,7 +10,7 @@ a kotlin VP sample except model part
 
 在gradle文件里面添加
 
-`implementation 'com.mou:vpLib:1.0.0'`
+`implementation 'com.mou:vpLib:1.1.0'`
 
 
 ## Licenses

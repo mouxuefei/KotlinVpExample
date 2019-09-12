@@ -11,14 +11,12 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.exmple.corelib.R
-import com.exmple.corelib.base.LibApplication.Companion.getRefWatcher
 import com.exmple.corelib.utils.MActivityUtils.pushActivity
 import com.exmple.corelib.utils.MActivityUtils.removeActivity
 import com.exmple.corelib.utils.MLoadingView
 import com.exmple.corelib.utils.register
 import com.exmple.corelib.utils.unregister
 import com.jaeger.library.StatusBarUtil
-import com.squareup.leakcanary.RefWatcher
 import kotlin.properties.Delegates
 
 
@@ -33,7 +31,6 @@ import kotlin.properties.Delegates
 abstract class BaseActivity : AppCompatActivity() {
     open var mContext: Context by Delegates.notNull()//非空属性:Delegates.notNull()
     open var mProgressDialog: MLoadingView? = null
-    private var refWatcher: RefWatcher? = null
     open fun initData() {}
     open fun onSetContentViewNext(savedInstanceState: Bundle?) {}
     @LayoutRes
@@ -57,7 +54,6 @@ abstract class BaseActivity : AppCompatActivity() {
         mProgressDialog = MLoadingView(this, R.style.dialog_transparent_style)
         onSetContentViewNext(savedInstanceState)
         initData()
-        refWatcher = getRefWatcher(this)
     }
 
     open fun bindView() {
@@ -134,6 +130,5 @@ abstract class BaseActivity : AppCompatActivity() {
         if (useEventBus()) {
             unregister(this)
         }
-        refWatcher?.watch(this)
     }
 }

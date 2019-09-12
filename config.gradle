@@ -47,8 +47,7 @@ ext {
             "rxbus"                             : "com.blankj:rxbus:1.5",
             //其他
             "logger"                             : "com.orhanobut:logger:2.2.0",
-            "leakcanary-android"                             : "com.squareup.leakcanary:leakcanary-android:1.5.4",
-            "leakcanary-android-no-op"                             : "com.squareup.leakcanary:leakcanary-android-no-op:1.5.4",
+//            "leakcanary-android"                             : "com.squareup.leakcanary:leakcanary-android:2.0-beta-1",
             "mkloader"                             : "com.tuyenmonkey:mkloader:1.4.0",
             "eventbus"                             : "org.greenrobot:eventbus:3.0.0",
             "statusbarutil"                             : "com.jaeger.statusbarutil:library:1.4.0",
