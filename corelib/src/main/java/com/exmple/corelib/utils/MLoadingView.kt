@@ -52,12 +52,11 @@ class MLoadingView constructor(context: Context, style: Int) {
     /**
      * 显示有加载文字ProgressDialog，文字显示在ProgressDialog的下面
      */
-    fun showProgressDialogWithText(text: String) {
+    fun showProgressDialogWithText(text: String?) {
         if (TextUtils.isEmpty(text)) {
             showProgressDialog()
         } else {
             if (mDialog != null && !mDialog.isShowing) {
-
                 loadText.text = text
                 loadText.setTextColor(Color.WHITE)
                 loadText.visibility = View.VISIBLE

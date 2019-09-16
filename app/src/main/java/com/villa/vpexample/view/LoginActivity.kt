@@ -13,10 +13,13 @@ import com.villa.vpexample.presenter.LoginPresenter
  */
 
 class LoginActivity : MBaseMvpActivity<ILoginContract.View, ILoginContract.Presenter>(), ILoginContract.View {
+
     override var mPresenter: ILoginContract.Presenter = LoginPresenter()
     override fun getContentView() = R.layout.main_activity
     override fun initView() {
-        mPresenter.getData()
+        mPresenter.getData{
+
+        }
     }
 }
 

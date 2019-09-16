@@ -23,7 +23,7 @@ interface ITopView : LifecycleOwner {
     fun getCtx(): Context?
     fun inited()
     fun finish(resultCode: Int = Activity.RESULT_CANCELED)
-    fun showLoading(@NotNull msg: String)
+    fun showLoading( msg: String?)
     fun showLoading(@StringRes srtResId: Int)
     fun dismissLoading()
     fun showToast(@StringRes srtResId: Int)

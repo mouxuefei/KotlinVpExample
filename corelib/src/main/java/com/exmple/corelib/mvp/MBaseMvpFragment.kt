@@ -28,7 +28,7 @@ abstract class MBaseMvpFragment<V : ITopView, P : ITopPresenter> : BaseFragment(
     override fun showToast(srtResId: Int) {
         showToast(resources.getString(srtResId))
     }
-    override fun showLoading(msg: String) {
+    override fun showLoading(msg: String?) {
         showProgressDialog(msg)
     }
 

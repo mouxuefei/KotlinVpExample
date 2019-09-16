@@ -9,7 +9,7 @@ publish {
     userOrg = 'mouxuefei'//bintray.com用户名
     groupId = 'com.mou'//jcenter上的路径
     artifactId = 'vpLib'//项目名称
-    publishVersion = '1.2.0'//版本号
+    publishVersion = '1.3.0'//版本号
     desc = 'Oh hi, this is a nice description for a project, right?'
     website = 'https://github.com/mouxuefei/KotlinVpExample'
     licences = ['Apache-2.0']

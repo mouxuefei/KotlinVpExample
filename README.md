@@ -12,6 +12,51 @@ a kotlin VP sample except model part
 
 `implementation 'com.mou:vpLib:1.2.0'`
 
+## 版本
+
+* v1.3.0优化网络请求写法
+
+用法1:
+
+      MainRetrofit.apiService.getArticle()
+                .bindDialogAndDisposable(mView, this)
+                .onResult {
+                    succuss.invoke(it)
+                }
+
+用法2:
+
+     http<ListBean<ArticleData>> {
+            api {
+                MainRetrofit.apiService.getArticle()
+            }
+            loadingView(mView)
+            disPool(this@LoginPresenter)
+            onSuccess {
+                showToastBottom("成功")
+            }
+            onError {
+
+            }
+        }
+
+两种效果是一样的
+
+
+* 网络baseurl 以及请求头封装(可以添加token,以及其他请求头)
+
+    	object MainRetrofit : RetrofitFactory<MainApi>() {
+    
+    	override fun getBaseUrl()="https://www.wanandroid.com/"
+    
+    	override fun getHeader(builder: Request.Builder): Request.Builder {
+        	return builder.addHeader("token","1233333333333333")
+    	}
+    	override fun getApiService(): Class<MainApi> {
+        	return MainApi::class.java
+    	}
+		}
+	
 
 ## Licenses
      Copyright 2019 villa_mou

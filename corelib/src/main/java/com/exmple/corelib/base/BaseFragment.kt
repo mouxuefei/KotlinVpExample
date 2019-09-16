@@ -73,7 +73,7 @@ abstract class BaseFragment : Fragment() {
 
     }
 
-    fun showProgressDialog(text: String) {
+    fun showProgressDialog(text: String?) {
         mProgressDialog?.showProgressDialogWithText(text)
     }
 

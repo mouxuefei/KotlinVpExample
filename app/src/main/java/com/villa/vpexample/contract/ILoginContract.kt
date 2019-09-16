@@ -1,7 +1,10 @@
 package com.villa.vpexample.contract
 
+import com.exmple.corelib.http.entity.BaseBean
+import com.exmple.corelib.http.entity.ListBean
 import com.exmple.corelib.mvp.IPresenter
 import com.exmple.corelib.mvp.IView
+import com.villa.vpexample.data.ArticleData
 
 /**
  * Description :
@@ -11,8 +14,9 @@ import com.exmple.corelib.mvp.IView
  */
 
 interface ILoginContract {
-    interface View : IView<Presenter> {}
+    interface View : IView<Presenter> {
+    }
     interface Presenter : IPresenter<View> {
-        fun getData()
+        fun getData(succuss:(BaseBean<ListBean<ArticleData>>?)->Unit)
     }
 }

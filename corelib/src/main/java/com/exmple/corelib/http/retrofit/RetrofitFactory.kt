@@ -33,10 +33,7 @@ abstract class RetrofitFactory<T> {
                     chain.proceed(build)
                 }
                 .addInterceptor(HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { message ->
-                    if (message.contains("{")||message.contains("=")||message.contains("http")
-                            ||message.contains("userToken")){
-                        Logger.e("${message}")
-                    }
+                    Logger.i("${message}")
                 }).setLevel(HttpLoggingInterceptor.Level.BODY))//设置打印得日志内容
                 .connectTimeout(time_out, TimeUnit.SECONDS)
                 .readTimeout(time_out, TimeUnit.SECONDS)
@@ -54,7 +51,6 @@ abstract class RetrofitFactory<T> {
     abstract fun getHeader(builder:Request.Builder): Request.Builder
 
     abstract fun getApiService(): Class<T>
-    abstract fun getToken(): String
     private fun buildGson(): Gson {
         return GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")

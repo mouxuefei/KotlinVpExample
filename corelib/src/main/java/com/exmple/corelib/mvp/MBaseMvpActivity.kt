@@ -17,7 +17,7 @@ abstract class MBaseMvpActivity<V : ITopView, P : ITopPresenter> : BaseActivity(
         inited()
     }
     override fun getCtx() = this
-    override fun showLoading(msg: String) {
+    override fun showLoading(msg: String?) {
         mProgressDialog?.showProgressDialogWithText(msg)
     }
 
