@@ -13,6 +13,8 @@ a kotlin VP sample except model part
 `implementation 'com.mou:vpLib:1.4.0'`
 
 ## 版本
+* v1.4.0去掉部分冗余代码
+
 
 * v1.3.0优化网络请求写法
 
@@ -43,7 +45,7 @@ a kotlin VP sample except model part
 两种效果是一样的
 
 
-* 网络baseurl 以及请求头封装(可以添加token,以及其他请求头)
+网络baseurl 以及请求头封装(可以添加token,以及其他请求头)
 
     	object MainRetrofit : RetrofitFactory<MainApi>() {
     
