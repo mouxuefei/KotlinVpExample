@@ -1,7 +1,6 @@
 package com.exmple.corelib.base
 
 import android.content.Context
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v4.content.ContextCompat
@@ -41,7 +40,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 //        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT//强制竖屏
+//        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT//强制竖屏
         mContext = this
         setContentView(getContentView())
         setStatusBar()

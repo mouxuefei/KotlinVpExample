@@ -1,10 +1,8 @@
 package com.villa.vpexample.presenter
 
-import com.exmple.corelib.http.bindDialogAndDisposable
 import com.exmple.corelib.http.entity.BaseBean
 import com.exmple.corelib.http.entity.ListBean
 import com.exmple.corelib.http.http
-import com.exmple.corelib.http.onResult
 import com.exmple.corelib.mvp.MBasePresenterKt
 import com.exmple.corelib.utils.showToastBottom
 import com.villa.vpexample.contract.ILoginContract
@@ -20,11 +18,11 @@ import com.villa.vpexample.http.MainRetrofit
 
 class LoginPresenter : MBasePresenterKt<ILoginContract.View>(), ILoginContract.Presenter {
     override fun getData(succuss: (BaseBean<ListBean<ArticleData>>?) -> Unit) {
-        MainRetrofit.apiService.getArticle()
-                .bindDialogAndDisposable(mView, this)
-                .onResult {
-                    succuss.invoke(it)
-                }
+//        MainRetrofit.apiService.getArticle()
+//                .bindDialogAndDisposable(mView, this)
+//                .onResult {
+//                    succuss.invoke(it)
+//                }
 
         http<ListBean<ArticleData>> {
             api {

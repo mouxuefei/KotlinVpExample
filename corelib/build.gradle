@@ -87,6 +87,10 @@ android {
             archives androidJavadocsJar
         }
     }
+
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {

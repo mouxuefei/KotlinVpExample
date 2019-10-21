@@ -1,0 +1,139 @@
+//package com.exmple.corelib.utils.dialog
+//
+//import android.content.Context
+//import android.content.DialogInterface
+//import android.graphics.Color
+//import android.graphics.drawable.ColorDrawable
+//import android.os.Bundle
+//import android.support.v4.app.DialogFragment
+//import android.support.v4.app.FragmentManager
+//import android.view.*
+//import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+//import com.exmple.corelib.utils.MUIUtils.Companion.dp2px
+//
+///**
+// * @FileName: BaseDialog.java
+// * @author: villa_mou
+// * @date: 10-14:00
+// * @version V1.0 <描述当前版本功能>
+// * @desc
+// */
+//abstract class BaseFragmentDialog : DialogFragment() {
+//
+//    var mWidth = WRAP_CONTENT
+//    var mHeight = WRAP_CONTENT
+//    var mGravity = Gravity.CENTER
+//    var mOffsetX = 0
+//    var mOffsetY = 0
+//    var mAnimation: Int? = null
+//    var touchOutside: Boolean = true
+//    var lowerBackground = false // 是否降级背景，例如图片预览的时候不可以降级（设置Activity的透明度）
+//    lateinit var mContext: Context
+//
+//    /****** listener ******/
+//    private var viewLoadedListener: ((View) -> Unit)? = null
+//    private var showListener: (() -> Unit)? = null
+//    private var disListener: (() -> Unit)? = null
+//
+//
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        mContext = context
+//    }
+//
+//
+//    protected abstract fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
+//
+//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+//        setStyle()
+//        val view = setView(inflater, container, savedInstanceState)
+//        viewLoadedListener?.invoke(view)
+//        return view
+//    }
+//
+//    /**
+//     * 防止同时弹出两个dialog
+//     */
+//    override fun show(manager: FragmentManager, tag: String?) {
+//        if (activity?.isFinishing == true) {
+//            return
+//        }
+//        showListener?.invoke()
+//        setBooleanField("mDismissed", false)
+//        setBooleanField("mShownByMe", true)
+//        val ft = manager.beginTransaction()
+//        ft.add(this, tag)
+//        ft.commitAllowingStateLoss()
+//    }
+//
+//    private fun setBooleanField(fieldName: String, value: Boolean) {
+//        try {
+//            val field = DialogFragment::class.java.getDeclaredField(fieldName)
+//            field.isAccessible = true
+//            field.set(this, value)
+//        } catch (e: NoSuchFieldException) {
+//            e.printStackTrace()
+//        } catch (e: IllegalAccessException) {
+//            e.printStackTrace()
+//        }
+//    }
+//
+//    override fun onDismiss(dialog: DialogInterface) {
+//        disListener?.invoke()
+//        super.onDismiss(dialog)
+//    }
+//
+//    fun onShow(listener: () -> Unit) {
+//        showListener = listener
+//    }
+//
+//    fun onDismiss(listener: () -> Unit) {
+//        disListener = listener
+//    }
+//
+//    /**
+//     * 布局加载完成监听事件
+//     * 用于 获取布局中的 view
+//     */
+//    fun onViewLoaded(listener: (View) -> Unit) {
+//        viewLoadedListener = listener
+//    }
+//
+//    private val keylistener = object : DialogInterface.OnKeyListener {
+//        override fun onKey(dialog: DialogInterface?, keyCode: Int, event: KeyEvent?): Boolean {
+//            return keyCode == KeyEvent.KEYCODE_BACK && event?.repeatCount == 0
+//        }
+//    }
+//
+//    /**
+//     * 设置统一样式
+//     */
+//    private fun setStyle() {
+//        //获取Window
+//        val window = dialog?.window
+//        //无标题
+//        dialog?.requestWindowFeature(DialogFragment.STYLE_NO_TITLE)
+//        // 透明背景
+//        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        if (lowerBackground) window?.setDimAmount(0F) // 去除 dialog 弹出的阴影
+//        dialog?.setCanceledOnTouchOutside(touchOutside)
+//        //设置宽高
+//        window!!.decorView.setPadding(0, 0, 0, 0)
+//        val wlp = window.attributes
+//        wlp.width = mWidth
+//        wlp.height = mHeight
+//        //设置对齐方式
+//        wlp.gravity = mGravity
+//        //设置偏移量
+//        wlp.x = dp2px(mOffsetX.toFloat()).toInt()
+//        wlp.y = dp2px(mOffsetY.toFloat()).toInt()
+//        //设置动画
+//        mAnimation?.also { window.setWindowAnimations(it) }
+//        window.attributes = wlp
+//
+//        if (!touchOutside) {
+//            dialog?.setOnKeyListener(keylistener)
+//        }
+//    }
+//
+//}

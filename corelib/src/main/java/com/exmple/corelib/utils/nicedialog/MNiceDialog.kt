@@ -5,33 +5,36 @@ import android.support.annotation.LayoutRes
 import android.support.annotation.StyleRes
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
+import android.util.Log
 import android.view.*
 import com.exmple.corelib.R
 import com.exmple.corelib.utils.MUIUtils
 import com.exmple.corelib.utils.MUIUtils.Companion.dp2px
 
+inline fun mDialog(fragmentManager: FragmentManager, dsl: MNiceDialog.() -> Unit) {
+    val dialog = MNiceDialog.init().apply(dsl)
+    dialog.show(fragmentManager)
+}
 
-abstract class BaseNiceDialog : DialogFragment() {
-    private var margin: Int = 0//左右边距
-    private var width: Int = 0//宽度
-    private var height: Int = 0//高度
-    private var dimAmount = 0.5f//灰度深浅
-    private var showBottom: Boolean = false//是否底部显示
-    private var outCancel = true//是否点击外部取消
+
+class MNiceDialog : DialogFragment() {
+    var margin: Int = 0//左右边距
+    var width: Int = 0//宽度
+    var height: Int = 0//高度
+    var dimAmount = 0.5f//灰度深浅
+    var showBottom: Boolean = false//是否底部显示
+    var outCancel = true//是否点击外部取消
     @StyleRes
-    private var animStyle: Int = 0
+    var animStyle: Int = 0
     @LayoutRes
-    protected var layoutId: Int = 0
+    var layoutId: Int = 0
 
-    abstract fun intLayoutId(): Int
-
-    abstract fun convertView(holder: ViewHolder, dialog: BaseNiceDialog)
+    var viewClick: DialogListner? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.NiceDialog)
         layoutId = intLayoutId()
-
         //恢复保存的数据
         if (savedInstanceState != null) {
             margin = savedInstanceState.getInt(MARGIN)
@@ -47,13 +50,20 @@ abstract class BaseNiceDialog : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(layoutId, container, false)
-        convertView(ViewHolder.create(view), this)
+        if (savedInstanceState != null) {
+            viewClick = savedInstanceState.getParcelable("listener")
+        }
         return view
     }
 
     override fun onStart() {
         super.onStart()
         initParams()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewClick?.convertView(view, this)
     }
 
     /**
@@ -69,6 +79,7 @@ abstract class BaseNiceDialog : DialogFragment() {
         outState.putBoolean(CANCEL, outCancel)
         outState.putInt(ANIM, animStyle)
         outState.putInt(LAYOUT, layoutId)
+        outState.putParcelable("listener", viewClick)
     }
 
     private fun initParams() {
@@ -104,43 +115,59 @@ abstract class BaseNiceDialog : DialogFragment() {
         isCancelable = outCancel
     }
 
-    fun setMargin(margin: Int): BaseNiceDialog {
+    fun setMargin(margin: Int): MNiceDialog {
         this.margin = margin
         return this
     }
 
-    fun setWidth(width: Int): BaseNiceDialog {
+    fun setWidth(width: Int): MNiceDialog {
         this.width = width
         return this
     }
 
-    fun setHeight(height: Int): BaseNiceDialog {
+    fun setHeight(height: Int): MNiceDialog {
         this.height = height
         return this
     }
 
-    fun setDimAmount(dimAmount: Float): BaseNiceDialog {
+    fun setDimAmount(dimAmount: Float): MNiceDialog {
         this.dimAmount = dimAmount
         return this
     }
 
-    fun setShowBottom(showBottom: Boolean): BaseNiceDialog {
+    fun setShowBottom(showBottom: Boolean): MNiceDialog {
         this.showBottom = showBottom
         return this
     }
 
-    fun setOutCancel(outCancel: Boolean): BaseNiceDialog {
+    fun setOutCancel(outCancel: Boolean): MNiceDialog {
         this.outCancel = outCancel
         return this
     }
 
-    fun setAnimStyle(@StyleRes animStyle: Int): BaseNiceDialog {
+    fun setAnimStyle(@StyleRes animStyle: Int): MNiceDialog {
         this.animStyle = animStyle
         return this
     }
 
-    fun show(manager: FragmentManager): BaseNiceDialog {
+    fun show(manager: FragmentManager) {
+        if (activity?.isFinishing == true) {
+            return
+        }
+        if (layoutId == 0) {
+            Log.e("MNiceDialog", "=============请设置布局==============")
+            return
+        }
         super.show(manager, System.currentTimeMillis().toString())
+    }
+
+
+    fun intLayoutId(): Int {
+        return layoutId
+    }
+
+    fun setLayoutId(@LayoutRes layoutId: Int): MNiceDialog {
+        this.layoutId = layoutId
         return this
     }
 
@@ -153,5 +180,13 @@ abstract class BaseNiceDialog : DialogFragment() {
         private val CANCEL = "out_cancel"
         private val ANIM = "anim_style"
         private val LAYOUT = "layout_id"
+        fun init(): MNiceDialog {
+            return MNiceDialog()
+        }
     }
+}
+
+
+ fun <V : View?> View.getView(id:Int): V {
+    return  this.findViewById<V>(id)
 }
