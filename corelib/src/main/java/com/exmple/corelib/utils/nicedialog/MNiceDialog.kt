@@ -45,14 +45,12 @@ class MNiceDialog : DialogFragment() {
             outCancel = savedInstanceState.getBoolean(CANCEL)
             animStyle = savedInstanceState.getInt(ANIM)
             layoutId = savedInstanceState.getInt(LAYOUT)
+            viewClick = savedInstanceState.getParcelable("listener")
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(layoutId, container, false)
-        if (savedInstanceState != null) {
-            viewClick = savedInstanceState.getParcelable("listener")
-        }
         return view
     }
 
